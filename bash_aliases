@@ -1,6 +1,6 @@
 # PATH
-export PATH=$HOME/bin:$PATH
-export PATH=$PATH:$HOME/.local/bin
+export GOPATH=$HOME/go
+export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$PATH
 
 # git, ghq
 function goto-repo {
@@ -15,13 +15,7 @@ alias g='goto-repo'
 alias add='git add .'
 alias commit='git commit'
 
-function create {
-    if [[ "$1" == "" ]]; then
-        return
-    fi
-    ghq create lunashade/$1
-}
-
+alias create='ghq create'
 alias status='git status'
 alias s='git status'
 alias rebase='git rebase -i'
@@ -41,7 +35,3 @@ function tm() {
            tmux new-session
        fi
    }
-
-# X Server
-export DISPLAY=localhost:0.0
-export "LIBGL_ALWAYS_INDIRECT=1"
