@@ -1,6 +1,8 @@
 # PATH
 export GOPATH=$HOME/go
 export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$PATH
+# rust
+source $HOME/.cargo/env
 
 # git, ghq
 function goto-repo {
@@ -9,7 +11,13 @@ function goto-repo {
         echo "nop"
         return
     fi
-    cd "$(ghq root)/$repo"
+    for root in $(ghq root --all); do
+        if [[ -d "$root/$repo"  ]]; then
+            cd "$root/$repo"
+            return
+        fi
+    done
+    echo "nop"
 }
 alias g='goto-repo'
 alias add='git add .'
@@ -34,4 +42,4 @@ function tm() {
            tmux attach-session || \
            tmux new-session
        fi
-   }
+}
